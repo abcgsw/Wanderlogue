@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鹭岛记 | 厦门深度行</title>
+    <style>
+        /* 基础样式 */
+        :root { /* 选择文档根元素（即 <html>），在此定义变量可全局使用 */
+            --primary-color: #006994;  /* 海洋蓝 */
+            --secondary-color: #FFD700; /* 沙滩金 */
+            --accent-color: #FF6B6B;   /* 珊瑚橙 */
+            --bg-color: #f0f8ff;       /* 浅天蓝 */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            line-height: 1.8;
+            color: var(--primary-color);
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background: rgba(255,255,255,0.95);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+			background-color: #c6daff;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        /* 主内容容器 */
+        .main-container {
+            max-width: 1200px;
+            margin: 80px auto 0;
+            padding: 20px;
+        }
+
+        /* 路线卡片 */
+        .route-card {
+            background: white;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .route-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .card-header {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .card-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .route-card:hover .card-header img {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        /* 消费表格 */
+        .cost-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .cost-table th,
+        .cost-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cost-table th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .cost-table tr:nth-child(even) {
+            background-color: #f8f8f8;
+        }
+
+        /* 攻略面板 */
+        .guide-section {
+            margin: 3rem 0;
+        }
+
+        .collapse-panel {
+            margin: 1rem 0;
+        }
+
+        .collapse-header {
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .collapse-content {
+            padding: 1rem;
+            background: white;
+            display: none;
+        }
+
+        .collapse-content ul li {
+            list-style: none;
+            padding-left: 16px;
+        }
+
+        /* 照片墙 */
+        .gallery {
+			/* 网格布局 同index网页 */
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 2rem 0;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s;
+            border-radius: 20px;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05); /* 悬停时稍微放大图片 */
+        }
+
+        /* 特殊样式 */
+        .highlight {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .warning-tip {
+            background: #fff3cd;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 1px solid #ffeeba;
+        }
+
+        /* 海浪装饰线 */
+        .wave-divider {
+            height: 15px;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 100" xmlns="http://www.w3.org/2000/svg"><path d="M0 70L1200 0V100H0z" fill="%23006994"/></svg>');
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><span>鹭</span>岛记(2024.10)</div>
+        </div>
+    </nav>
+
+    <!-- 主内容 -->
+    <div class="main-container">
+        <!-- 路线推荐 -->
+        <section class="route-card">
+            <div class="card-header">
+                <img src="images/99.jpg" alt="厦门">
+            </div>
+            <div class="card-content">
+                <h2>🏝️ 鹭岛漫游路线</h2>
+                <p>鼓浪屿 → 曾厝垵 → 环岛路 → 沙坡尾 → 厦门植物园</p>
+                
+                <!-- 消费表格 -->
+                <table class="cost-table">
+                    <tr>
+                        <th>项目</th>
+                        <th>明细</th>
+                        <th>金额</th>
+                    </tr>
+                    <tr>
+                        <td>交通</td>
+                        <td>轮渡+共享单车（3日）</td>
+                        <td class="highlight">¥80</td>
+                    </tr>
+                    <tr>
+                        <td>餐饮</td>
+                        <td>沙茶面+土笋冻+海鲜</td>
+                        <td class="highlight">¥150/天</td>
+                    </tr>
+                    <tr>
+                        <td>门票</td>
+                        <td>鼓浪屿船票+植物园</td>
+                        <td class="highlight">¥100</td>
+                    </tr>
+                    <tr>
+                        <td>住宿</td>
+                        <td>曾厝垵民宿（2晚）</td>
+                        <td class="highlight">¥500</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <div class="wave-divider"></div>
+
+        <!-- 文字攻略 -->
+        <section class="guide-section">
+            <div class="collapse-panel">
+                <div class="collapse-header" onclick="toggleCollapse(this)">
+                    <h3>📜 海岛生存指南</h3>
+                    <span>▼</span>
+                </div>
+                <div class="collapse-content">
+                    <div class="warning-tip">
+                        <h4>⚠️ 避坑指南</h4>
+                        <p>1. 鼓浪屿船票提前1天在「厦门轮渡」公众号预定<br>
+                        2. 曾厝垵开蚌取珠套路多，谨慎消费<br>
+                        3. 的士司机推荐的景点餐厅慎去</p>
+                    </div>
+
+                    <h4 style="padding-left: 16px;">🚴 特色体验</h4>
+                    <ul>
+                        <li>环岛路骑行：白城沙滩租车¥15/小时</li>
+                        <li>夜游沙坡尾：艺术西区每周六创意市集</li>
+                        <li>钟鼓索道：植物园西门乘坐（¥70）</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 照片墙 -->
+        <section class="gallery">
+            <div class="gallery-item">
+                <img src="images/鼓浪屿.png" alt="鼓浪屿">
+            </div>
+            <div class="gallery-item">
+                <img src="images/曾厝垵.jpg" alt="曾厝垵">
+            </div>
+            <div class="gallery-item">
+                <img src="images/沙坡尾.jpg" alt="沙坡尾">
+            </div>
+        </section>
+
+        <!-- 冷知识卡片 -->
+        <div class="culture-card">
+            <h3>🏡 冷知识：鼓浪屿为何没有机动车？</h3>
+            <p>1902年《鼓浪屿公共地界章程》规定禁止车辆通行，至今保留11条步行巷道，仅有消防和垃圾车特许通行</p>
+        </div>
+    </div>
+
+   <!-- 彩蛋按钮 -->
+     
+   <button id="easterEggBtn" style="position: fixed; bottom: 30px; right: 30px; 
+           padding: 12px 25px; background: var(--accent-color); color: white; 
+           border: none; border-radius: 25px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+           z-index: 1000;">
+       🎁 点击查看彩蛋
+   </button>
+    <!-- 彩蛋弹窗-->
+   <div id="secretModal" style="display: none; position: fixed; top: 0; left: 0; 
+        width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000;">
+       <div style="position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: white; padding: 2rem; border-radius: 15px; max-width: 400px;">
+           <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🔒 请输入访问密码</h3>
+           <input type="password" id="secretInput" placeholder="输入密码" 
+                  style="width: 100%; padding: 12px; margin-bottom: 1rem; 
+                         border: 2px solid #ddd; border-radius: 8px;">
+           <p id="errorMsg" style="color: red; display: none; margin-bottom: 1rem;"></p>
+           <button onclick="checkPassword()" 
+                   style="background: var(--secondary-color); color: white; 
+                          padding: 12px 25px; border: none; border-radius: 8px; 
+                          cursor: pointer; margin-right: 1rem;">
+               确认
+           </button>
+           <button onclick="closeModal()" 
+                   style="background: #666; color: white; padding: 12px 25px; 
+                          border: none; border-radius: 8px; cursor: pointer;">
+               关闭
+           </button>
+       </div>
+   </div>
+   
+   <!-- 返回按钮 -->
+   <a href="index1.html" style="text-decoration: none;">
+   <button id="easterEggBtn" style="position: fixed; bottom: 30px; left: 30px;
+           padding: 12px 25px; background: var(--accent-color); color: white; 
+           border: none; border-radius: 25px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+           z-index: 1000;">
+       🔙返回首页
+   </button>
+   </a>
+   
+
+    <script>
+        // 折叠面板功能
+        function toggleCollapse(header) {
+			//获取内容区域：取 header 的下一个兄弟元素（DOM 结构需配合）
+            const content = header.nextElementSibling; 
+			//三元 切换显隐状态：若内容当前显示则隐藏，否则显示
+            content.style.display = content.style.display === 'block' ? 'none' : 'block';
+            //新指示图标：根据显隐状态切换 ▲ 或 ▼
+			header.querySelector('span').textContent = 
+                content.style.display === 'block' ? '▲' : '▼';
+        }
+
+        // 图片点击放大
+		//选择所有画廊图片元素（类名为 gallery-item 下的 img 标签）
+        document.querySelectorAll('.gallery-item img').forEach(img => {
+            //为每个图片绑定点击事件
+			img.addEventListener('click', () => {
+				//创建全屏遮罩层元素
+                const overlay = document.createElement('div');
+				//设置遮罩层样式（内联样式）
+                overlay.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0,0,0,0.8); // 黑色半透明背景
+                    z-index: 3000;   // 确保在最顶层
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    cursor: zoom-out;  // 提示可关闭
+                `;
+                //创建放大图片对象
+                const bigImg = new Image(); // 等效于 document.createElement('img')
+                bigImg.src = img.src;  //使用原图地址
+                bigImg.style.maxWidth = '90%';
+                bigImg.style.maxHeight = '90%';
+                bigImg.style.borderRadius = '15px';
+				
+				//将放大图插入遮罩层
+                overlay.appendChild(bigImg);
+				//将遮罩层插入页面
+                document.body.appendChild(overlay);
+				
+				//绑定遮罩层点击关闭事件
+                overlay.addEventListener('click', () => {
+                    overlay.remove(); // 移除遮罩层元素
+                });
+            });
+        });
+
+        // 彩蛋功能
+                  const correctPassword = "070425"; // 预设密码
+                  const secretPhotoUrl = "images/彩蛋/彩蛋5.jpg"; // 彩蛋图片
+               		
+                  // 打开模态框
+                  document.getElementById("easterEggBtn").addEventListener("click", () => {
+                      document.getElementById("secretModal").style.display = "block";
+                  });
+               		
+                  // 关闭模态框
+                  function closeModal() {
+                      document.getElementById("secretModal").style.display = "none";
+                      document.getElementById("errorMsg").style.display = "none";
+                      document.getElementById("secretInput").value = "";
+                  }
+               		
+                  // 验证密码
+                  function checkPassword() {
+                      const input = document.getElementById("secretInput").value;
+                      const errorMsg = document.getElementById("errorMsg");
+                      
+                      if(input === correctPassword) {
+                          // 创建图片元素
+                          const imgBox = document.createElement("div");
+                          imgBox.innerHTML = `
+                              <div style="margin-top: 2rem; text-align: center;">
+                                  <img src="${secretPhotoUrl}" 
+                                       style="width: 100%; border-radius: 10px; margin-bottom: 1rem;">
+                                  <p style="color: var(--secondary-color))">🎉 解锁旅游照片！！</p>
+                              </div>
+                          `;
+                          // 插入到模态框
+                          document.querySelector("#secretModal > div").appendChild(imgBox);
+                          // closeModal();
+                      } else {
+                          errorMsg.textContent = "❌ 密码错误喽，不能看彩蛋啦~";
+                          errorMsg.style.display = "block";
+                          // 清空输入框
+                          document.getElementById("secretInput").value = "";
+                          // 错误动画
+                          document.getElementById("secretInput").style.animation = "shake 0.5s";
+                          setTimeout(() => {
+                              document.getElementById("secretInput").style.animation = "";
+                          }, 500);
+                      }
+                  }
+               		
+                  // 点击背景关闭
+                  document.getElementById("secretModal").addEventListener("click", (e) => {
+                      if(e.target === document.getElementById("secretModal")) { //e.target`是事件对象的一个属性，指向触发事件的元素 
+                          closeModal();
+                      }
+                  });
+    </script>
+</body>
+</html>

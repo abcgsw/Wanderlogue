@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>碧海蓝天 | 三亚深度游</title>
+    <style>
+        /* 基础样式 */
+        :root {
+            --primary-color: #006994;  /* 海洋蓝 */
+            --secondary-color: #FFD700; /* 沙滩金 */
+            --accent-color: #FF6B6B;   /* 珊瑚橙 */
+            --bg-color: #f0f8ff;       /* 浅天蓝 */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            line-height: 1.8;
+            color: var(--primary-color);
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background: rgba(255,255,255,0.95);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+			background-color: lightblue;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        /* 主内容容器 */
+        .main-container {
+            max-width: 1200px;
+            margin: 80px auto 0;
+            padding: 20px;
+        }
+
+        /* 路线卡片 */
+        .route-card {
+            background: white;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .route-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .card-header {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .card-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .route-card:hover .card-header img {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        /* 消费表格 */
+        .cost-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .cost-table th,
+        .cost-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cost-table th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .cost-table tr:nth-child(even) {
+            background-color: #f8f8f8;
+        }
+
+        /* 攻略面板 */
+        .guide-section {
+            margin: 3rem 0;
+        }
+
+        .collapse-panel {
+            margin: 1rem 0;
+        }
+
+        .collapse-header {
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .collapse-content {
+            padding: 1rem;
+            background: white;
+            display: none;
+        }
+
+        .collapse-content ul li {
+            list-style: none;
+            padding-left: 16px;
+        }
+
+        /* 照片墙 */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 2rem 0;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s;
+            border-radius: 20px;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* 特殊样式 */
+        .highlight {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .warning-tip {
+            background: #fff3cd;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 1px solid #ffeeba;
+        }
+
+        /* 海浪装饰线 */
+        .wave-divider {
+            height: 15px;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 100" xmlns="http://www.w3.org/2000/svg"><path d="M0 70L1200 0V100H0z" fill="%23006994"/></svg>');
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><span>碧</span>海蓝天(2013.04)</div>
+        </div>
+    </nav>
+
+    <!-- 主内容 -->
+    <div class="main-container">
+        <!-- 路线推荐 -->
+        <section class="route-card">
+            <div class="card-header">
+                <img src="images/66.jpg" alt="三亚海滩">
+            </div>
+            <div class="card-content">
+                <h2>🌴 三亚秘境路线</h2>
+                <p>后海村 → 蜈支洲岛 → 椰梦长廊 → 亚龙湾热带天堂 → 天涯海角</p>
+                
+                <!-- 消费表格 -->
+                <table class="cost-table">
+                    <tr>
+                        <th>项目</th>
+                        <th>明细</th>
+                        <th>金额</th>
+                    </tr>
+                    <tr>
+                        <td>交通</td>
+                        <td>租电动车+船票（3日）</td>
+                        <td class="highlight">¥300</td>
+                    </tr>
+                    <tr>
+                        <td>餐饮</td>
+                        <td>海鲜+椰子鸡+抱罗粉</td>
+                        <td class="highlight">¥200/天</td>
+                    </tr>
+                    <tr>
+                        <td>门票</td>
+                        <td>蜈支洲岛套票+森林公园</td>
+                        <td class="highlight">¥380</td>
+                    </tr>
+                    <tr>
+                        <td>住宿</td>
+                        <td>海景民宿（2晚）</td>
+                        <td class="highlight">¥600</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <div class="wave-divider"></div>
+
+        <!-- 文字攻略 -->
+        <section class="guide-section">
+            <div class="collapse-panel">
+                <div class="collapse-header" onclick="toggleCollapse(this)">
+                    <h3>📜 海岛生存指南</h3>
+                    <span>▼</span>
+                </div>
+                <div class="collapse-content">
+                    <div class="warning-tip">
+                        <h4>⚠️ 避坑指南</h4>
+                        <p>1. 避免在景区门口购买潜水套餐，提前网上预定<br>
+                        2. 海鲜市场谨防调包，建议去下岗职工市场<br>
+                        3. 租车时检查车身划痕并录像</p>
+                    </div>
+
+                    <h4 style="padding-left: 16px;">🏄 特色体验</h4>
+                    <ul>
+                        <li>后海冲浪体验：¥150/2小时含教学</li>
+                        <li>夜钓鱿鱼：¥200/人含装备</li>
+                        <li>直升机观光：¥500/10分钟</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 照片墙 -->
+        <section class="gallery">
+            <div class="gallery-item">
+                <img src="images/后海村.jpg" alt="后海村">
+            </div>
+            <div class="gallery-item">
+                <img src="images/蜈支洲岛.jpg" alt="蜈支洲岛">
+            </div>
+            <div class="gallery-item">
+                <img src="images/椰梦长廊.jpg" alt="椰梦长廊">
+            </div>
+        </section>
+		
+		<div class="culture-card">
+		    <h3>🌴 冷知识：三亚沙滩为何"会唱歌"？</h3>
+		    <p>亚龙湾沙滩在特定湿度下，脚踩细沙会发出"吱吱"声响，这种鸣沙现象源于石英砂含量高达98%的特殊结构，全球仅10处海滩有此奇观</p>
+		</div>
+    </div>
+
+    <!-- 彩蛋按钮 -->
+  
+   <button id="easterEggBtn" style="position: fixed; bottom: 30px; right: 30px; 
+           padding: 12px 25px; background: var(--accent-color); color: white; 
+           border: none; border-radius: 25px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+           z-index: 1000;">
+       🎁 点击查看彩蛋
+   </button>
+    <!-- 彩蛋弹窗-->
+   <div id="secretModal" style="display: none; position: fixed; top: 0; left: 0; 
+        width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000;">
+       <div style="position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: white; padding: 2rem; border-radius: 15px; max-width: 400px;">
+           <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">🔒 请输入访问密码</h3>
+           <input type="password" id="secretInput" placeholder="输入密码" 
+                  style="width: 100%; padding: 12px; margin-bottom: 1rem; 
+                         border: 2px solid #ddd; border-radius: 8px;">
+           <p id="errorMsg" style="color: red; display: none; margin-bottom: 1rem;"></p>
+           <button onclick="checkPassword()" 
+                   style="background: var(--secondary-color); color: white; 
+                          padding: 12px 25px; border: none; border-radius: 8px; 
+                          cursor: pointer; margin-right: 1rem;">
+               确认
+           </button>
+           <button onclick="closeModal()" 
+                   style="background: #666; color: white; padding: 12px 25px; 
+                          border: none; border-radius: 8px; cursor: pointer;">
+               关闭
+           </button>
+       </div>
+   </div>
+   <!-- 返回按钮 -->
+   <a href="index1.html" style="text-decoration: none;">
+   <button id="easterEggBtn" style="position: fixed; bottom: 30px; left: 30px;
+           padding: 12px 25px; background: var(--accent-color); color: white; 
+           border: none; border-radius: 25px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+           z-index: 1000;">
+       🔙返回首页
+   </button>
+   </a>
+   
+
+    <script>
+        // 折叠面板功能
+        function toggleCollapse(header) {
+            const content = header.nextElementSibling;
+            content.style.display = content.style.display === 'block' ? 'none' : 'block';
+            header.querySelector('span').textContent = 
+                content.style.display === 'block' ? '▲' : '▼';
+        }
+
+        // 彩蛋功能
+           const correctPassword = "070425"; // 预设密码
+           const secretPhotoUrl = "images/彩蛋/彩蛋2.jpg"; // 彩蛋图片
+        		
+           // 打开模态框
+           document.getElementById("easterEggBtn").addEventListener("click", () => {
+               document.getElementById("secretModal").style.display = "block";
+           });
+        		
+           // 关闭模态框
+           function closeModal() {
+               document.getElementById("secretModal").style.display = "none";
+               document.getElementById("errorMsg").style.display = "none";
+               document.getElementById("secretInput").value = "";
+           }
+        		
+           // 验证密码
+           function checkPassword() {
+               const input = document.getElementById("secretInput").value;
+               const errorMsg = document.getElementById("errorMsg");
+               
+               if(input === correctPassword) {
+                   // 创建图片元素
+                   const imgBox = document.createElement("div");
+                   imgBox.innerHTML = `
+                       <div style="margin-top: 2rem; text-align: center;">
+                           <img src="${secretPhotoUrl}" 
+                                style="width: 100%; border-radius: 10px; margin-bottom: 1rem;">
+                           <p style="color: var(--secondary-color))">🎉 解锁旅游照片！！</p>
+                       </div>
+                   `;
+                   // 插入到模态框
+                   document.querySelector("#secretModal > div").appendChild(imgBox);
+                   // closeModal();
+               } else {
+                   errorMsg.textContent = "❌ 密码错误喽，不能看彩蛋啦~";
+                   errorMsg.style.display = "block";
+                   // 清空输入框
+                   document.getElementById("secretInput").value = "";
+                   // 错误动画
+                   document.getElementById("secretInput").style.animation = "shake 0.5s";
+                   setTimeout(() => {
+                       document.getElementById("secretInput").style.animation = "";
+                   }, 500);
+               }
+           }
+        		
+           // 点击背景关闭
+           document.getElementById("secretModal").addEventListener("click", (e) => {
+               if(e.target === document.getElementById("secretModal")) {
+                   closeModal();
+               }
+           });
+		   
+        // 图片点击放大
+        document.querySelectorAll('.gallery-item img').forEach(img => {
+            img.addEventListener('click', () => {
+                const overlay = document.createElement('div');
+                overlay.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0,0,0,0.8);
+                    z-index: 3000;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    cursor: zoom-out;
+                `;
+                
+                const bigImg = new Image();
+                bigImg.src = img.src;
+                bigImg.style.maxWidth = '90%';
+                bigImg.style.maxHeight = '90%';
+                bigImg.style.borderRadius = '15px';
+
+                overlay.appendChild(bigImg);
+                document.body.appendChild(overlay);
+
+                overlay.addEventListener('click', () => {
+                    overlay.remove();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
